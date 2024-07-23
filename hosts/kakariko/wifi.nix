@@ -9,7 +9,6 @@
   networking.wireless.environmentFile = /run/secrets/wifi;
 
   networking.wireless.networks = {
-
     eduroam = let
       cacert = builtins.toFile "ca_cert.pam" "-----BEGIN CERTIFICATE-----
 MIIDwzCCAqugAwIBAgIBATANBgkqhkiG9w0BAQsFADCBgjELMAkGA1UEBhMCREUx

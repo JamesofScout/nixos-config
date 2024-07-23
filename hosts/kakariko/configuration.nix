@@ -3,6 +3,7 @@
 # and in the NixOS manual (accessible by running `nixos-help`).
 {
   pkgs,
+  inputs,
   config,
   ...
 }: {
@@ -11,13 +12,22 @@
     ../../modules/modules.nix
   ];
 
-  jamesofscout.impermanence = {
-    enable = true; 
-    persistentFullHome = true;
-    defaultPath = "/persistent";
+  nix-tun.storage.persist = {
+    enable = true;
+    subvolumes = {
+      "home" = {
+        bindMountDirectories = true;
+        directories = {
+          "/home/florian" = {
+            owner = "florian";
+            group = "florian";
+            mode = "0700";
+          };
+        };
+      };
+    };
   };
-
-  jamesofscout.yubikey-gpg.enable = true;
+  nix-tun.yubikey-gpg.enable = true;
   myservices = {
     tailscale.enable = true;
   };
@@ -55,6 +65,13 @@
   # Networking
   networking.firewall.enable = true;
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  networking.hosts = {
+    "192.168.10.110" = [
+      "teefax"
+      "cloud.teefax"
+      "login.teefax"
+    ];
+  };
   services.tailscale.enable = true;
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
@@ -104,9 +121,25 @@
     wireguard-tools
   ];
 
+  services.openssh.hostKeys = [
+    {
+      bits = 4096;
+      openSSHFormat = true;
+      path = "/persist/ssh-keys/ssh_host_rsa_key";
+      rounds = 100;
+      type = "rsa";
+    }
+    {
+      comment = "key comment";
+      path = "/persist/ssh-keys/ssh_host_ed25519_key";
+      rounds = 100;
+      type = "ed25519";
+    }
+  ];
+
   programs.java.enable = true;
   programs.java.package = pkgs.jdk21;
-  
+
   # List services that you want to enable:
   services.udev.packages = [pkgs.yubikey-personalization];
   services.udev.extraRules = ''

@@ -1,11 +1,12 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
-{ config, lib, pkgs, ... }:
-
 {
-
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   myprograms = {
     cli.better-tools.enable = true;
     cli.nixvim.enable = true;
@@ -21,24 +22,22 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "Hateno"; # Define your hostname.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
 
-
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
 
   sops.secrets.florian-pass = {
-    format = "yaml"; 
+    format = "yaml";
     sopsFile = ../../secrets/florian.yaml;
     neededForUsers = true;
   };
 
   users.users.florian = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
     hashedPasswordFile = config.sops.secrets.florian-pass.path;
     uid = 1000;
     group = "florian";
@@ -53,7 +52,7 @@
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
-  
+
   networking.firewall.enable = true;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
@@ -74,6 +73,4 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "24.05"; # Did you read the comment?
-
 }
-

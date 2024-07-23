@@ -11,6 +11,7 @@
       url = "github:nix-community/nixvim";
       #inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-tun.url = "github:nix-tun/nixos-modules";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
@@ -36,10 +37,11 @@
       modules = [
         {
           nix.settings = {
-            substituters = [ "https://cosmic.cachix.org/" ];
-            trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-	  };
+            substituters = ["https://cosmic.cachix.org/"];
+            trusted-public-keys = ["cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="];
+          };
         }
+        inputs.nix-tun.nixosModules.nix-tun
         inputs.nixos-cosmic.nixosModules.default
         ./hosts/kakariko/configuration.nix
         ./hosts/kakariko/hardware-configuration.nix
@@ -52,9 +54,9 @@
     nixosConfigurations.Hateno = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-	inputs.home-manager.nixosModules.home-manager
-	./hosts/hateno/configuration.nix
-	./modules/modules.nix
+        inputs.home-manager.nixosModules.home-manager
+        ./hosts/hateno/configuration.nix
+        ./modules/modules.nix
         ./hosts/hateno/hardware-configuration.nix
       ];
       specialArgs = {inherit inputs;};
@@ -74,12 +76,12 @@
     };
 
     nixosConfigurations.stick = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; };
+      specialArgs = {inherit inputs;};
       modules = [
-	inputs.disko.nixosModules.disko
+        inputs.disko.nixosModules.disko
         inputs.home-manager.nixosModules.home-manager
-	./hosts/stick/configuration.nix
-	./modules/modules.nix
+        ./hosts/stick/configuration.nix
+        ./modules/modules.nix
       ];
     };
 

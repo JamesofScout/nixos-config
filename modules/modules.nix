@@ -1,4 +1,8 @@
-{lib, inputs, ...}: {
+{
+  lib,
+  inputs,
+  ...
+}: {
   imports = [
     inputs.sops-nix.nixosModules.sops
     ./cli/better-tools.nix
@@ -8,7 +12,7 @@
     ./desktop/programs.nix
     ./services/tailscale.nix
     ./stylix.nix
-    ./impermanence.nix
+    #./impermanence.nix
     ./yubikey-gpg.nix
   ];
 
