@@ -65,13 +65,6 @@
   # Networking
   networking.firewall.enable = true;
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
-  networking.hosts = {
-    "192.168.10.110" = [
-      "teefax"
-      "cloud.teefax"
-      "login.teefax"
-    ];
-  };
   services.tailscale.enable = true;
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
@@ -136,6 +129,11 @@
       type = "ed25519";
     }
   ];
+
+  programs.ssh.extraConfig = ''
+  Host *
+    ForwardAgent yes
+  '';
 
   programs.java.enable = true;
   programs.java.package = pkgs.jdk21;
