@@ -11,7 +11,7 @@
       url = "github:nix-community/nixvim";
       #inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-tun.url = "github:nix-tun/nixos-modules";
+    nix-tun.url = "github:nix-tun/nixos-modules/container-utils";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";

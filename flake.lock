@@ -502,11 +502,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1722597776,
-        "narHash": "sha256-UeXkyGNPDN53NOck99CAL8x8iSJbu7I9C3AHft1i+ak=",
+        "lastModified": 1723544628,
+        "narHash": "sha256-YgRtVpGeLP71ocXKPCnWVCYi6zcatRqt/42d06fkyOE=",
         "owner": "nix-tun",
         "repo": "nixos-modules",
-        "rev": "8e1c0b72adbe705506db9608045661864d3ba5c1",
+        "rev": "33e2bf1ed5c992903c4e7d118d2faed521448166",
         "type": "github"
       },
       "original": {
