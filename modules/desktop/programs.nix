@@ -1,8 +1,7 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }: {
   options = {
     myprograms.desktop.programs.enable = lib.mkEnableOption "Enable Standard Desktop Programs";
@@ -17,6 +16,7 @@
     environment.systemPackages = with pkgs; [
       onlyoffice-bin_latest
       bootstrap-studio
+      element-desktop
       thunderbird
     ];
 
