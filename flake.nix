@@ -65,7 +65,7 @@
     nixosConfigurations.HyruleCity = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./configuration.nix
+        ./hosts/hyrule-city/configuration.nix
         ./hosts/hyrule-city/hardware-configuration.nix
         ./hosts/hyrule-city/nvidia-config.nix
         ./hosts/hyrule-city/boot.nix

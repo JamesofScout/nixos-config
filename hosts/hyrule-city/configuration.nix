@@ -6,8 +6,8 @@
   ...
 }: {
   imports = [
-    ./fonts.nix
-    ./modules/modules.nix
+    ../../fonts.nix
+    ../../modules/modules.nix
   ];
 
   jamesofscout.yubikey-gpg.enable = true;
@@ -88,7 +88,7 @@
   };
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  home-manager.users.florian = import ./home/florian.nix;
+  home-manager.users.florian = import ../../home/florian.nix;
 
   nix.settings.trusted-users = [
    "root"
@@ -101,7 +101,6 @@
     wget
     sox
     docker-compose
-    streamdeck-ui
     solaar
   ];
 
