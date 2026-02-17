@@ -34,7 +34,7 @@
     programs.nixvim = {
       enable = true;
       clipboard = {
-        register = "unnamed";
+        register = "unnamedplus";
         providers.wl-copy.enable = true;
       };
       plugins = {
