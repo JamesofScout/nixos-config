@@ -14,7 +14,7 @@
   config = lib.mkIf config.myprograms.desktop.programs.enable {
     myprograms.desktop.firefox.enable = true;
     environment.systemPackages = with pkgs; [
-      onlyoffice-bin_latest
+      onlyoffice-desktopeditors
       bootstrap-studio
       element-desktop
       thunderbird

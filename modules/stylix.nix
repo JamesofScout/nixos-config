@@ -1,9 +1,8 @@
-{
-  config,
-  pkgs,
-  lib,
-  inputs,
-  ...
+{ config
+, pkgs
+, lib
+, inputs
+, ...
 }: {
   options = {
     myprograms.stylix.enable = lib.mkEnableOption "Enable Stylix";
@@ -25,15 +24,12 @@
 
       base16Scheme = lib.mkDefault "${pkgs.base16-schemes}/share/themes/monokai.yaml";
       fonts.monospace = lib.mkDefault {
-        package = pkgs.nerdfonts.override {
-          fonts = [
-            "FiraCode"
-          ];
-        };
+        package = pkgs.nerd-fonts.fira-code;
         name = "FiraCode Nerd Font Mono";
       };
 
       cursor.package = pkgs.banana-cursor;
+      cursor.size = 32;
       cursor.name = "Banana";
     };
   };

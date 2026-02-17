@@ -1,9 +1,8 @@
-{
-  config,
-  pkgs,
-  services,
-  stylix,
-  ...
+{ config
+, pkgs
+, services
+, stylix
+, ...
 }: {
   imports = [
     ./editor/intelij.nix
@@ -15,10 +14,6 @@
   home.stateVersion = "23.11";
   home.username = "florian";
   home.homeDirectory = "/home/florian";
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = _: true;
-  };
 
   home.packages = with pkgs; [
     texlive.combined.scheme-full
@@ -26,6 +21,7 @@
     spot
     dunst
     gnomeExtensions.gsconnect
+    gnomeExtensions.tailscale-qs
     yubioath-flutter
     kitty
   ];
@@ -43,6 +39,7 @@
       ];
       enabled-extensions = [
         "gsconnect@andyholmes.github.io"
+        "tailscale-qs@tailscalejoaophi.github.com"
       ];
     };
   };

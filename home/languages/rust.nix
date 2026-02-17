@@ -1,7 +1,8 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     gcc
-    rustup
+    cargo
+    rustc
     pkg-config
     openssl
   ];

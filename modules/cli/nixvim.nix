@@ -33,6 +33,10 @@
 
     programs.nixvim = {
       enable = true;
+      clipboard = {
+        register = "unnamed";
+        providers.wl-copy.enable = true;
+      };
       plugins = {
         lualine.enable = true;
         fidget.enable = true;
@@ -45,8 +49,13 @@
             nixd = {
               enable = true;
               settings = {
-                #nixpkgs = "${inputs.nixpkgs}";
+                #nixpkgs = "import <nixpkgs> {}";
                 formatting.command = [ "nixpkgs-fmt" ];
+                options = {
+                  nixos = {
+                    expr = "(builtins.getFlake \"${inputs.self.outPath}\").nixosConfigurations.${config.networking.hostName}.options";
+                  };
+                };
               };
             };
 
@@ -57,8 +66,6 @@
             gopls.enable = true;
 
             ccls.enable = true;
-
-            ansiblels.enable = true;
 
             marksman.enable = true;
           };

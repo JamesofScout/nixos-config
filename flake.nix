@@ -4,6 +4,7 @@
     hyprland-contrib.url = "github:hyprwm/contrib";
     home-manager.url = "github:nix-community/home-manager";
     stylix.url = "github:danth/stylix";
+    easyroam-nixpkgs.url = "github:NixOs/nixpkgs/f45b52f30f082f40bef75e18a9e17dec93657f47";
     nixvim = {
       url = "github:nix-community/nixvim";
     };
@@ -13,27 +14,20 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     impermanence.url = "github:nix-community/impermanence";
     disko.url = "github:nix-community/disko";
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
     { nixpkgs
     , ...
-    } @ inputs: {
+    } @ inp:
+    let
+      inputs = inp // { flake-root = ./.; };
+    in
+    {
       nixosConfigurations.Kakariko = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          {
-            nix.settings = {
-              substituters = [ "https://cosmic.cachix.org/" ];
-              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-            };
-          }
           inputs.nix-tun.nixosModules.nix-tun
-          inputs.nixos-cosmic.nixosModules.default
           ./hosts/kakariko/configuration.nix
           ./hosts/kakariko/hardware-configuration.nix
           ./hosts/kakariko/boot.nix
@@ -84,7 +78,6 @@
             "${toString ./.}/keys/hosts"
             "${toString ./.}/keys/users"
           ];
-          specialArgs = { inherit inputs; };
         };
     };
 }

@@ -1,17 +1,18 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
-{
-  pkgs,
-  inputs,
-  config,
-  ...
+{ pkgs
+, inputs
+, config
+, ...
 }: {
   imports = [
     ../../fonts.nix
     ../../modules/modules.nix
   ];
-
+  nixpkgs.config.permittedInsecurePackages = [
+    "olm-3.2.16"
+  ];
   nix-tun.storage.persist = {
     enable = true;
     subvolumes = {
@@ -32,23 +33,28 @@
     tailscale.enable = true;
   };
 
+  qt.enable = true;
+
   myprograms = {
-    #desktop.gnome.enable = true;
+    desktop.gnome.enable = true;
     desktop.programs.enable = true;
     cli.better-tools.enable = true;
     cli.nixvim.enable = true;
   };
 
-  services.desktopManager.cosmic.enable = true;
-  services.displayManager.cosmic-greeter.enable = true;
-
+  #services.desktopManager.cosmic.enable = true;
+  #services.displayManager.cosmic-greeter.enable = true;
   services = {
+    cloudflare-warp.enable = true;
     fprintd.enable = false;
     pipewire.enable = true;
     pipewire.audio.enable = true;
     pipewire.alsa.enable = true;
     pipewire.pulse.enable = true;
   };
+
+  services.samba.enable = true;
+  services.gvfs.enable = true;
 
   services.mpd = {
     enable = true;
@@ -95,11 +101,13 @@
     neededForUsers = true;
   };
 
+  programs.wireshark.enable = true;
+
   # User Account
   users.users.florian = {
     isNormalUser = true;
     hashedPasswordFile = config.sops.secrets.florian-pass.path;
-    extraGroups = ["wheel" "networkmanager" "uinput" "input" "docker"];
+    extraGroups = [ "wheel" "networkmanager" "uinput" "input" "docker" ];
     shell = pkgs.fish;
   };
 
@@ -112,7 +120,11 @@
   environment.systemPackages = with pkgs; [
     sox
     solaar
-    wireguard-tools
+    keepassxc
+    cloudflare-warp
+    prismlauncher
+    olm
+    dig
   ];
 
   services.openssh.hostKeys = [
@@ -132,15 +144,15 @@
   ];
 
   programs.ssh.extraConfig = ''
-  Host *
-    ForwardAgent yes
+    Host *
+      ForwardAgent yes
   '';
 
   programs.java.enable = true;
   programs.java.package = pkgs.jdk21;
 
   # List services that you want to enable:
-  services.udev.packages = [pkgs.yubikey-personalization];
+  services.udev.packages = [ pkgs.yubikey-personalization ];
   services.udev.extraRules = ''
     KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
   '';

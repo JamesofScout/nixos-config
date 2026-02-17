@@ -1,9 +1,8 @@
-{
-  config,
-  pkgs,
-  lib,
-  inputs,
-  ...
+{ config
+, pkgs
+, lib
+, inputs
+, ...
 }: {
   imports = [
     inputs.nix-index-database.nixosModules.nix-index
@@ -15,7 +14,7 @@
 
   config = lib.mkMerge [
     (lib.mkIf config.myprograms.cli.better-tools.enable {
-      nix.settings.experimental-features = ["nix-command" "flakes"];
+      nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
       environment.systemPackages = with pkgs; [
         curl
@@ -33,6 +32,12 @@
       programs.git.enable = true;
 
       users.defaultUserShell = pkgs.fish;
+      programs.direnv = {
+        enable = true;
+        loadInNixShell = true;
+        nix-direnv.enable = true;
+        enableFishIntegration = true;
+      };
       programs.fish.enable = true;
       programs.fish.shellAliases = {
         ls = "lsd";
