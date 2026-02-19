@@ -37,6 +37,14 @@
         register = "unnamedplus";
         providers.wl-copy.enable = true;
       };
+      opts = {
+        signcolumn = "yes";
+        expandtab = true;
+        shiftwidth = 2;
+        tabstop = 2;
+        number = true;
+        autoindent = true;
+      };
       plugins = {
         lualine.enable = true;
         fidget.enable = true;
@@ -60,13 +68,13 @@
             };
 
             java-language-server.enable = true;
-
-            texlab.enable = true;
-
             gopls.enable = true;
 
             ccls.enable = true;
+            <<<<<<< HEAD
 
+              ====== =
+              > > >>>>> 49aec98 (to long without commits)
             marksman.enable = true;
           };
         };
@@ -74,6 +82,8 @@
 
         lsp-format.enable = true;
         lspsaga.enable = true;
+        vimtex.enable = true;
+        vimtex.texlivePackage = pkgs.texliveFull;
 
         dap = {
           enable = true;
@@ -85,7 +95,7 @@
         telescope.enable = true;
         markdown-preview.enable = true;
         oil.enable = true;
-
+        web-devicons.enable = true;
         luasnip.enable = true;
         treesitter.enable = true;
         crates-nvim.enable = true;
@@ -164,11 +174,6 @@
       ];
 
       globals.mapleader = " ";
-      opts = {
-        signcolumn = "yes";
-        number = true;
-        shiftwidth = 2;
-      };
     };
   };
 }

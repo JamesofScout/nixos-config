@@ -18,7 +18,7 @@
     };
     hardware.pulseaudio.enable = false;
 
-    environment.gnome.excludePackages = lib.mkIf (!config.myprograms.desktop.firefox.enable) (with pkgs; [
+    environment.gnome.excludePackages = lib.mkIf (config.myprograms.desktop.firefox.enable) (with pkgs; [
       epiphany
     ]);
 

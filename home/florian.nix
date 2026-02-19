@@ -16,7 +16,7 @@
   home.homeDirectory = "/home/florian";
 
   home.packages = with pkgs; [
-    texlive.combined.scheme-full
+    texliveFull
     python3
     spot
     dunst

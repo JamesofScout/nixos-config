@@ -36,14 +36,11 @@
   qt.enable = true;
 
   myprograms = {
-    desktop.gnome.enable = true;
-    desktop.programs.enable = true;
+    desktop.cosmic.enable = true;
     cli.better-tools.enable = true;
     cli.nixvim.enable = true;
   };
 
-  #services.desktopManager.cosmic.enable = true;
-  #services.displayManager.cosmic-greeter.enable = true;
   services = {
     cloudflare-warp.enable = true;
     fprintd.enable = false;
@@ -81,13 +78,6 @@
   console = {
     keyMap = "us";
   };
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-  services.printing.drivers = [
-    pkgs.epson-escpr
-    pkgs.epson-escpr2
-  ];
 
   services.avahi.enable = true;
   services.avahi.nssmdns4 = true;

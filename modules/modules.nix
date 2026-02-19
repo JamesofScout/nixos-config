@@ -1,7 +1,6 @@
-{
-  lib,
-  inputs,
-  ...
+{ lib
+, inputs
+, ...
 }: {
   imports = [
     inputs.sops-nix.nixosModules.sops
@@ -9,7 +8,9 @@
     ./cli/nixvim.nix
     ./desktop/gnome.nix
     ./desktop/hyprland.nix
+    ./development/vm.nix
     ./desktop/programs.nix
+    ./desktop/sunshine.nix
     ./services/tailscale.nix
     ./stylix.nix
     #./impermanence.nix

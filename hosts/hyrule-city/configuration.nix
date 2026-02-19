@@ -1,9 +1,8 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
-{
-  pkgs,
-  ...
+{ pkgs
+, ...
 }: {
   imports = [
     ../../fonts.nix
@@ -15,14 +14,24 @@
   myservices = {
     tailscale.enable = true;
   };
-
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      libGL
+    ];
+  };
   myprograms = {
-    desktop.gnome.enable = true;
+    development.vm.enable = true;
+    #desktop.gnome.enable = true;
     desktop.programs.enable = true;
+    desktop.sunshine.enable = true;
     cli.better-tools.enable = true;
     cli.nixvim.enable = true;
     stylix.enable = true;
   };
+
+  services.desktopManager.cosmic.enable = true;
+  services.displayManager.cosmic-greeter.enable = true;
 
   services = {
     fprintd.enable = false;
@@ -67,11 +76,6 @@
   };
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
-  services.printing.drivers = [
-    pkgs.epson-escpr
-    pkgs.epson-escpr2
-  ];
   virtualisation.docker.enable = true;
   services.avahi.enable = true;
   services.avahi.nssmdns4 = true;
@@ -83,7 +87,7 @@
   users.users.florian = {
     isNormalUser = true;
     initialPassword = "";
-    extraGroups = ["wheel" "networkmanager" "uinput" "input" "docker"];
+    extraGroups = [ "wheel" "networkmanager" "uinput" "input" "docker" ];
     shell = pkgs.fish;
   };
   home-manager.useGlobalPkgs = true;
@@ -91,8 +95,8 @@
   home-manager.users.florian = import ../../home/florian.nix;
 
   nix.settings.trusted-users = [
-   "root"
-   "@wheel"
+    "root"
+    "@wheel"
   ];
 
   # List packages installed in system profile. To search, run:
@@ -102,22 +106,34 @@
     sox
     docker-compose
     solaar
+    prismlauncher
+    lutris
   ];
 
+  services.printing.drivers = with pkgs; [
+    gutenprint
+    epsonscan2
+    epson-escpr2
+    epson-escpr
+  ];
+
+
   programs.java.enable = true;
-  programs.java.package = pkgs.jdk21;
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
 
   # List services that you want to enable:
-  services.udev.packages = [pkgs.yubikey-personalization];
+  services.udev.packages = [ pkgs.yubikey-personalization ];
   services.udev.extraRules = ''
     KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
   '';
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+
+  services.printing.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

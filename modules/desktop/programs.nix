@@ -13,15 +13,24 @@
 
   config = lib.mkIf config.myprograms.desktop.programs.enable {
     myprograms.desktop.firefox.enable = true;
+    programs.appimage.enable = true;
+    programs.appimage.binfmt = true;
+    services.flatpak.enable = true;
     environment.systemPackages = with pkgs; [
       onlyoffice-desktopeditors
+      spotify
       bootstrap-studio
       element-desktop
       thunderbird
+      streamcontroller
+      gnome-boxes
+      gnome-frog
+      boatswain
+      iotas
+      wike
+      impression
+      hieroglyphic
     ];
 
-    nixpkgs.config.permittedInsecurePackages = [
-      "electron-25.9.0"
-    ];
   };
 }
