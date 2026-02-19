@@ -69,12 +69,7 @@
 
             java-language-server.enable = true;
             gopls.enable = true;
-
             ccls.enable = true;
-            <<<<<<< HEAD
-
-              ====== =
-              > > >>>>> 49aec98 (to long without commits)
             marksman.enable = true;
           };
         };
