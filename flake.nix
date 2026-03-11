@@ -40,6 +40,8 @@
         system = "x86_64-linux";
         modules = [
           inputs.home-manager.nixosModules.home-manager
+	  inputs.disko.nixosModules.disko
+          inputs.nix-tun.nixosModules.nix-tun
           ./hosts/hateno/configuration.nix
           ./modules/modules.nix
           ./hosts/hateno/hardware-configuration.nix
