@@ -22,7 +22,11 @@
     ./disko.nix
   ];
 
-  nix-tun.services.traefik.enable = true;
+  nix-tun.services.traefik = {
+    enable = true;
+    letsencryptMail = "florian.schubert.sg@gmail.com";
+  };
+  nix-tun.alloy.prometheus-host = null;
 
   nix.settings.trusted-users = [ "root" "@wheel" ];
 
@@ -42,6 +46,11 @@
     format = "yaml";
     sopsFile = ../../secrets/florian.yaml;
     neededForUsers = true;
+  };
+
+  sops.secrets.cloudflare-apitoken = {
+    format = "yaml";
+    sopsFile = ../../secrets/cloudflare-apitoken.yaml;
   };
 
   users.users.florian = {
@@ -65,8 +74,18 @@
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
-
   networking.firewall.enable = true;
+
+  services.cloudflare-dyndns = {
+    enable = true;
+    ipv4 = true;
+    ipv6 = true;
+    domains = [
+      "hatscript.de"
+      "*.hatscript.de"
+    ];
+    apiTokenFile = config.sops.secrets.cloudflare-apitoken.path;
+  };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

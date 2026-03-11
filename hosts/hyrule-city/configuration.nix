@@ -103,6 +103,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     wget
+    keepassxc
     sox
     docker-compose
     solaar
