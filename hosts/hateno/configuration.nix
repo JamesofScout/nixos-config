@@ -30,7 +30,7 @@
     letsencryptMail = "florian.schubert.sg@gmail.com";
   };
   nix-tun.alloy.prometheus-host = null;
-  nix-tun.services.containers.nextcloud.secretsFile = {
+  nix-tun.services.containers.nextcloud = {
     enable = true;
     hostname = "nextcloud.hatscript.de";
   };
