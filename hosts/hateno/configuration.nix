@@ -16,6 +16,9 @@
   nix-tun.storage.persist = {
     enable = true;
     path = "/fast_persist";
+    subvolumes = {
+      "containers/jellyfin".path = "/mass-storage/containers/jellyfin";
+    };
   };
 
   imports = [
@@ -27,6 +30,37 @@
     letsencryptMail = "florian.schubert.sg@gmail.com";
   };
   nix-tun.alloy.prometheus-host = null;
+  nix-tun.services.containers.nextcloud.secretsFile = {
+    enable = true;
+    hostname = "nextcloud.hatscript.de";
+  };
+
+  nix-tun.utils.containers.jellyfin = {
+    domains.jellyfin = {
+      domain = "jellyfin.hatscript.de";
+      port = 8096;
+    };
+    volumes = {
+      "/var/cache/jellyfin" = { };
+      "/var/lib/jellyfin" = { };
+      "/media" = { owner = "jellyfin"; group = "jellyfin"; };
+      "/books" = { owner = "jellyfin"; group = "jellyfin"; };
+      "/cache" = { owner = "jellyfin"; group = "jellyfin"; };
+    };
+    config = { ... }: {
+      environment.systemPackages = [
+        pkgs.jellyfin
+        pkgs.jellyfin-web
+        pkgs.jellyfin-ffmpeg
+      ];
+
+      services.jellyfin = {
+        enable = true;
+        transcoding.enableHardwareEncoding = true;
+      };
+    };
+  };
+
 
   nix.settings.trusted-users = [ "root" "@wheel" ];
 
@@ -36,12 +70,19 @@
 
   networking.hostName = "Hateno"; # Define your hostname.
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  systemd.network.enable = true;
 
+  services.resolved.enable = true;
+  sops.useTmpfs = true;
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
 
+  sops = {
+    defaultSopsFormat = "yaml";
+    defaultSopsFile = ../../secrets/hateno.yaml;
+  };
   sops.secrets.florian-pass = {
     format = "yaml";
     sopsFile = ../../secrets/florian.yaml;
