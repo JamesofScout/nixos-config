@@ -128,6 +128,7 @@
   services.udev.packages = [ pkgs.yubikey-personalization ];
   services.udev.extraRules = ''
     KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
+    KERNEL=="uhid", GROUP="udev", MODE="0660"
   '';
 
   # Enable the OpenSSH daemon.

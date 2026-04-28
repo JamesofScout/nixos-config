@@ -11,6 +11,6 @@
 
     services.desktopManager.cosmic.enable = true;
     services.displayManager.cosmic-greeter.enable = true;
-    desktop.programs.enable = true;
+    myprograms.desktop.programs.enable = true;
   };
 }

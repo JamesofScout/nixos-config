@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOs/nixpkgs";
+    headplane.url = "github:tale/headplane";
     hyprland-contrib.url = "github:hyprwm/contrib";
     home-manager.url = "github:nix-community/home-manager";
     stylix.url = "github:danth/stylix";
@@ -40,7 +41,7 @@
         system = "x86_64-linux";
         modules = [
           inputs.home-manager.nixosModules.home-manager
-	  inputs.disko.nixosModules.disko
+          inputs.disko.nixosModules.disko
           inputs.nix-tun.nixosModules.nix-tun
           ./hosts/hateno/configuration.nix
           ./modules/modules.nix

@@ -21,6 +21,11 @@
     };
   };
 
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [ vpl-gpu-rt ];
+  };
+
   imports = [
     ./disko.nix
   ];
@@ -33,6 +38,27 @@
   nix-tun.services.containers.nextcloud = {
     enable = true;
     hostname = "nextcloud.hatscript.de";
+  };
+
+  nix-tun.services.authelia = {
+    enable = true;
+    domain = "authelia.hatscript.de";
+  };
+
+  nix-tun.utils.containers.grafana.config.services.grafana.settings.security.secret_key = "SW2YcwTIb9zpOOhoPsMm";
+
+
+  nix-tun.services.grafana = {
+    enable = true;
+    domain = "https://grafana.hatscript.de";
+    loki.domain = "https://loki.hatscript.de";
+    prometheus.domain = "https://prometheus.hatscript.de";
+    oauth = { };
+  };
+
+  nix-tun.services.headscale = {
+    enable = true;
+    domain = "headscale.hatscript.de";
   };
 
   nix-tun.utils.containers.jellyfin = {
@@ -48,6 +74,11 @@
       "/cache" = { owner = "jellyfin"; group = "jellyfin"; };
     };
     config = { ... }: {
+      hardware.graphics = {
+        enable = true;
+        extraPackages = with pkgs; [ vpl-gpu-rt ];
+      };
+
       environment.systemPackages = [
         pkgs.jellyfin
         pkgs.jellyfin-web
@@ -69,7 +100,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "Hateno"; # Define your hostname.
-  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
   systemd.network.enable = true;
 
   services.resolved.enable = true;

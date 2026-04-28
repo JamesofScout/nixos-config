@@ -11,6 +11,7 @@
     ./development/vm.nix
     ./desktop/programs.nix
     ./desktop/sunshine.nix
+    ./desktop/cosmic.nix
     ./services/tailscale.nix
     ./stylix.nix
     #./impermanence.nix

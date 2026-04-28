@@ -42,6 +42,7 @@
   };
 
   services = {
+    printing.enable = true;
     cloudflare-warp.enable = true;
     fprintd.enable = false;
     pipewire.enable = true;

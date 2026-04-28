@@ -22,7 +22,7 @@
 
     nix-tun.storage.persist.subvolumes."tailscale" = {
       bindMountDirectories = true;
-      directories."/var/lib/tailscale/" = { };
+      directories."/var/lib/tailscale" = { };
     };
 
   };
