@@ -11,6 +11,17 @@
 
   jamesofscout.yubikey-gpg.enable = true;
 
+  nixpkgs.overlays = [
+    (self: super: {
+      handbrake = super.handbrake.override {
+        libbluray = super.libbluray-full;
+      };
+      openldap = super.openldap.overrideAttrs {
+        doCheck = !super.stdenv.hostPlatform.isi686;
+      };
+    })
+  ];
+
   myservices = {
     tailscale.enable = true;
   };
@@ -20,9 +31,10 @@
       libGL
     ];
   };
+
   myprograms = {
     development.vm.enable = true;
-    #desktop.gnome.enable = true;
+    desktop.gnome.enable = true;
     desktop.programs.enable = true;
     desktop.sunshine.enable = true;
     cli.better-tools.enable = true;
@@ -30,8 +42,7 @@
     stylix.enable = true;
   };
 
-  services.desktopManager.cosmic.enable = true;
-  services.displayManager.cosmic-greeter.enable = true;
+  services.ollama.enable = true;
 
   services = {
     fprintd.enable = false;
@@ -68,7 +79,10 @@
   time.timeZone = "Europe/Berlin";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    supportedLocales = [ "all" ];
+  };
   console = {
     #  font = "Lat2-Terminus16";
     keyMap = "us";
@@ -86,6 +100,7 @@
   # User Account
   users.users.florian = {
     isNormalUser = true;
+    uid = 1000;
     initialPassword = "";
     extraGroups = [ "wheel" "networkmanager" "uinput" "input" "docker" ];
     shell = pkgs.fish;
@@ -93,7 +108,7 @@
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.florian = import ../../home/florian.nix;
-
+  home-manager.backupCommand = "rm";
   nix.settings.trusted-users = [
     "root"
     "@wheel"
@@ -103,12 +118,16 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     wget
+    makemkv
+    vlc
+    handbrake
     keepassxc
     sox
     docker-compose
     solaar
     prismlauncher
     lutris
+    rpi-imager
   ];
 
   services.printing.drivers = with pkgs; [
@@ -129,6 +148,12 @@
   services.udev.extraRules = ''
     KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
     KERNEL=="uhid", GROUP="udev", MODE="0660"
+
+    # Disable DS4 touchpad acting as mouse
+    # USB
+    ATTRS{name}=="Sony Interactive Entertainment DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+    # Bluetooth
+    ATTRS{name}=="DualSense Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
   '';
 
   # Enable the OpenSSH daemon.

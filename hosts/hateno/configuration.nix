@@ -18,6 +18,7 @@
     path = "/fast_persist";
     subvolumes = {
       "containers/jellyfin".path = "/mass-storage/containers/jellyfin";
+      "containers/arm".path = "/mass-storage/containers/arm";
     };
   };
 
@@ -28,6 +29,7 @@
 
   imports = [
     ./disko.nix
+    ./arm.nix
   ];
 
   nix-tun.services.traefik = {
@@ -59,6 +61,10 @@
   nix-tun.services.headscale = {
     enable = true;
     domain = "headscale.hatscript.de";
+  };
+
+  nix-tun.utils.containers.nextcloud.config = { ... }: {
+    services.nextcloud.appstoreEnable = true;
   };
 
   nix-tun.utils.containers.jellyfin = {
@@ -100,9 +106,18 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "Hateno"; # Define your hostname.
+  networking.useNetworkd = true;
   systemd.network.enable = true;
-
   services.resolved.enable = true;
+  systemd.network.networks."10-home" = {
+    matchConfig.Name = "eth0";
+    networkConfig = {
+      DHCP = "ipv4";
+      IPv6AcceptRA = true;
+    };
+    linkConfig.RequiredForOnline = "routable";
+  };
+
   sops.useTmpfs = true;
   # Set your time zone.
   time.timeZone = "Europe/Berlin";

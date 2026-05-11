@@ -7,6 +7,7 @@
     ./cli/better-tools.nix
     ./cli/nixvim.nix
     ./desktop/gnome.nix
+    ./desktop/cosmic.nix
     ./desktop/hyprland.nix
     ./development/vm.nix
     ./desktop/programs.nix

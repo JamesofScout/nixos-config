@@ -9,11 +9,14 @@
     enable = true;
   };
 
+  #hardware.graphics.enable = true;
+
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
-    # Modesetting is required.
+    # enabled = false;
+    ## Modesetting is required.
     modesetting.enable = true;
 
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
@@ -33,11 +36,11 @@
     # independent third-party "nouveau" open source driver).
     # Support is limited to the Turing and later architectures. Full list of
     # supported GPUs is at:
-    open = true;
+    open = false;
 
     # Might be needed for some games to work properly.
     # It might reduce performance
-    forceFullCompositionPipeline = false;
+    forceFullCompositionPipeline = true;
     # Enable the Nvidia settings menu,
     # accessible via `nvidia-settings`.
     nvidiaSettings = true;

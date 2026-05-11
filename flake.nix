@@ -1,7 +1,6 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOs/nixpkgs";
-    headplane.url = "github:tale/headplane";
     hyprland-contrib.url = "github:hyprwm/contrib";
     home-manager.url = "github:nix-community/home-manager";
     stylix.url = "github:danth/stylix";
@@ -9,7 +8,7 @@
     nixvim = {
       url = "github:nix-community/nixvim";
     };
-    nix-tun.url = "github:nix-tun/nixos-modules";
+    nix-tun.url = "/home/florian/Documents/nixos-modules";
     sops-nix.url = "github:Mic92/sops-nix";
     flake-utils.url = "github:numtide/flake-utils";
     nix-index-database.url = "github:nix-community/nix-index-database";
