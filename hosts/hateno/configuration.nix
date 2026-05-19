@@ -67,6 +67,10 @@
     services.nextcloud.appstoreEnable = true;
   };
 
+  environment.systemPackages = with pkgs; [
+    jellyfin-ffmpeg
+  ];
+
   nix-tun.utils.containers.jellyfin = {
     domains.jellyfin = {
       domain = "jellyfin.hatscript.de";
