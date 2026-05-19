@@ -2,6 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 { pkgs
+, lib
 , inputs
 , config
 , ...
@@ -13,6 +14,7 @@
   nixpkgs.config.permittedInsecurePackages = [
     "olm-3.2.16"
   ];
+
   nix-tun.storage.persist = {
     enable = true;
     subvolumes = {
@@ -32,6 +34,15 @@
   myservices = {
     tailscale.enable = true;
   };
+
+  services.easyroam = {
+    enable = true;
+    pkcsFile = "/home/florian/Nixos.p12";
+    wpa-supplicant.enable = true;
+    networkmanager.enable = true;
+  };
+
+  networking.wireless.userControlled = true;
 
   qt.enable = true;
 
@@ -102,6 +113,11 @@
     shell = pkgs.fish;
   };
 
+  users.users.karaoke = {
+    isNormalUser = true;
+    password = "";
+  };
+
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.florian = import ../../home/florian.nix;
@@ -109,11 +125,13 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    ultrastardx
     sox
     solaar
     keepassxc
     cloudflare-warp
     prismlauncher
+    easyroam-connect-desktop
     olm
     dig
   ];

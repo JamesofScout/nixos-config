@@ -1,16 +1,16 @@
-{
-  config,
-  pkgs,
-  sops,
-  ...
+{ config
+, pkgs
+, sops
+, ...
 }: {
-  networking.wireless.enable = true;
+  networking.wireless.enable = false;
   networking.wireless.userControlled.enable = true;
   networking.wireless.environmentFile = /run/secrets/wifi;
 
   networking.wireless.networks = {
-    eduroam = let
-      cacert = builtins.toFile "ca_cert.pam" "-----BEGIN CERTIFICATE-----
+    eduroam =
+      let
+        cacert = builtins.toFile "ca_cert.pam" "-----BEGIN CERTIFICATE-----
 MIIDwzCCAqugAwIBAgIBATANBgkqhkiG9w0BAQsFADCBgjELMAkGA1UEBhMCREUx
 KzApBgNVBAoMIlQtU3lzdGVtcyBFbnRlcnByaXNlIFNlcnZpY2VzIEdtYkgxHzAd
 BgNVBAsMFlQtU3lzdGVtcyBUcnVzdCBDZW50ZXIxJTAjBgNVBAMMHFQtVGVsZVNl
@@ -33,19 +33,20 @@ g1XqfMIpiRvpb7PO4gWEyS8+eIVibslfwXhjdFjASBgMmTnrpMwatXlajRWc2BQN
 9noHV8cigwUtPJslJj0Ys6lDfMjIq2SPDqO/nBudMNva0Bkuqjzx+zOAduTNrRlP
 BSeOE6Fuwg==
 -----END CERTIFICATE----- ";
-    in {
-      auth = ''
-        key_mgmt=WPA-EAP
-        pairwise=CCMP
-        eap=TTLS
-        password="@EDUROAM_PASSWORD@"
-        ca_cert="${cacert}"
-        altsubject_match="DNS:radius.hhu.de"
-        phase2="auth=PAP"
-        identity="astawifi@hhu.de"
-        anonymous_identity="eduroam@hhu.de"
-        group=CCMP TKIP
-      '';
-    };
+      in
+      {
+        auth = ''
+          key_mgmt=WPA-EAP
+          pairwise=CCMP
+          eap=TTLS
+          password="@EDUROAM_PASSWORD@"
+          ca_cert="${cacert}"
+          altsubject_match="DNS:radius.hhu.de"
+          phase2="auth=PAP"
+          identity="astawifi@hhu.de"
+          anonymous_identity="eduroam@hhu.de"
+          group=CCMP TKIP
+        '';
+      };
   };
 }

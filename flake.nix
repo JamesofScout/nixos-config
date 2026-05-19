@@ -1,6 +1,8 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOs/nixpkgs";
+    nix-easyroam.url = "github:einetuer/nix-easyroam";
+    headplane.url = "github:tale/headplane";
     hyprland-contrib.url = "github:hyprwm/contrib";
     home-manager.url = "github:nix-community/home-manager";
     stylix.url = "github:danth/stylix";
@@ -28,6 +30,7 @@
         system = "x86_64-linux";
         modules = [
           inputs.nix-tun.nixosModules.nix-tun
+          inputs.nix-easyroam.nixosModules.nix-easyroam
           ./hosts/kakariko/configuration.nix
           ./hosts/kakariko/hardware-configuration.nix
           ./hosts/kakariko/boot.nix
