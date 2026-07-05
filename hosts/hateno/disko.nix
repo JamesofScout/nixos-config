@@ -28,8 +28,8 @@
                   nix = {
                     mountpoint = "/nix";
                   };
-                  fast_persistent = {
-                    mountpoint = "/fast_persist";
+                  fast-persist = {
+                    mountpoint = "/fast-persist";
                   };
                   root = {
                     mountpoint = "/";
@@ -41,15 +41,36 @@
           };
         };
       };
-      mass-storage = {
+      mass-storage1 = {
         device = "/dev/sda";
         content = {
-          type = "btrfs";
-          extraArgs = [ "-f" ];
-          mountpoint = "/btrfs-roots/mass-storage";
-          subvolumes = {
-            big_persistent = {
-              mountpoint = "/mass-storage";
+          type = "luks";
+          name = "m1";        
+          settings.allowDiscards = true;
+        };
+      };
+      mass-storage2 = {
+        device = "/dev/sdb";
+        content = {
+          type = "luks";
+          name = "m2";
+          settings.allowDiscards = true;
+        };
+      };
+      mass-storage3 = {
+        device = "/dev/sdc";
+        content = {
+          type = "luks";
+          name = "m3";
+          settings.allowDiscards = true;
+          content = {
+            type = "btrfs";
+            extraArgs = [ "-f" "-d raid5" "/dev/mapper/m1" "/dev/mapper/m2" ];
+            mountpoint = "/btrfs-roots/mass-storage";
+            subvolumes = {
+              mass-storage = {
+                mountpoint = "/mass-storage";
+              };
             };
           };
         };

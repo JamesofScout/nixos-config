@@ -10,7 +10,7 @@
     nixvim = {
       url = "github:nix-community/nixvim";
     };
-    nix-tun.url = "/home/florian/Documents/nixos-modules";
+    nix-tun.url = "github:nix-tun/nixos-modules";
     sops-nix.url = "github:Mic92/sops-nix";
     flake-utils.url = "github:numtide/flake-utils";
     nix-index-database.url = "github:nix-community/nix-index-database";

@@ -553,14 +553,17 @@
         "nixpkgs": "nixpkgs_9"
       },
       "locked": {
-        "lastModified": 1777764137,
-        "narHash": "sha256-hJalGgLB4nKMLrCr+OkQOVSfjQD0u03nQPAdYTPrfOk=",
-        "path": "/home/florian/Documents/nixos-modules",
-        "type": "path"
+        "lastModified": 1783291549,
+        "narHash": "sha256-5kVy/1LuGTV44O/khYiKMdSdVb8NAluz+A0hwKb3nD0=",
+        "owner": "nix-tun",
+        "repo": "nixos-modules",
+        "rev": "47a6c1a94a5e56f121db26a4d3775de1f5ce2f3a",
+        "type": "github"
       },
       "original": {
-        "path": "/home/florian/Documents/nixos-modules",
-        "type": "path"
+        "owner": "nix-tun",
+        "repo": "nixos-modules",
+        "type": "github"
       }
     },
     "nixpkgs": {
