@@ -93,7 +93,6 @@
         web-devicons.enable = true;
         luasnip.enable = true;
         treesitter.enable = true;
-        crates-nvim.enable = true;
 
         rainbow-delimiters.enable = true;
         cmp = {
