@@ -56,10 +56,13 @@
     printing.enable = true;
     cloudflare-warp.enable = true;
     fprintd.enable = false;
-    pipewire.enable = true;
-    pipewire.audio.enable = true;
-    pipewire.alsa.enable = true;
-    pipewire.pulse.enable = true;
+    pulseaudio.zeroconf.discovery.enable = true;
+    pipewire = {
+      enable = true;
+      audio.enable = true;
+      alsa.enable = true;
+      pulse.enable = true;
+    };
   };
 
   services.samba.enable = true;
@@ -74,8 +77,6 @@
 
   hardware.bluetooth.enable = true;
   programs.nano.enable = false;
-
-  services.blueman.enable = true;
 
   # Networking
   networking.firewall.enable = true;
@@ -120,7 +121,8 @@
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  home-manager.users.florian = import ../../home/florian.nix;
+  home-manager.users.florian = import
+    ../../home/florian.nix;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
