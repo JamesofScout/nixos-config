@@ -27,6 +27,7 @@
       ];
     };
   };
+
   boot.initrd.systemd.network = {
     enable = true;
     networks."10-home" = {
@@ -78,9 +79,9 @@
 
   nix-tun.services.grafana = {
     enable = true;
-    domain = "https://grafana.hatscript.de";
-    loki.domain = "https://loki.hatscript.de";
-    prometheus.domain = "https://prometheus.hatscript.de";
+    domain = "grafana.hatscript.de";
+    loki.domain = "loki.hatscript.de";
+    prometheus.domain = "prometheus.hatscript.de";
     oauth = { };
   };
 
@@ -128,7 +129,6 @@
     };
   };
 
-
   nix.settings.trusted-users = [ "root" "@wheel" ];
 
   # Use the systemd-boot EFI boot loader.
@@ -140,7 +140,7 @@
   systemd.network.enable = true;
   services.resolved.enable = true;
   systemd.network.networks."10-home" = {
-    matchConfig.Name = "eth0";
+    matchConfig.Name = "enp37s0";
     networkConfig = {
       DHCP = "ipv4";
       IPv6AcceptRA = true;
